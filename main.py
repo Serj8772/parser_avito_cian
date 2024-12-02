@@ -9,7 +9,7 @@ import fake_useragent
 import telebot
 import csv
 
-from settings1 import token, id_channel, link_avito
+from settings import token, id_channel, link_avito
 
 
 # настройка бота
