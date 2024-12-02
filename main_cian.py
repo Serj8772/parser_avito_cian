@@ -7,7 +7,7 @@ import fake_useragent
 import telebot
 import csv
 
-from settings1 import token, id_channel, link_cian
+from settings import token, id_channel, link_cian, delay
 
 
 # настройка бота
@@ -33,7 +33,7 @@ driver = webdriver.Chrome(options=opts)
 while True:
 
     # загружаем ссылки из csv
-    filename = 'links_cian1.csv'
+    filename = 'links_cian.csv'
     with open(filename, mode='r', newline='') as file:
         reader = csv.reader(file)
         existing_rows = list(reader)
@@ -63,11 +63,12 @@ while True:
                     with open(filename, mode='a', newline='', encoding='utf-8') as file:
                         writer = csv.writer(file)
                         writer.writerow([data])
-                    print(data)
+                    print(data, '--', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                     bot.send_message(id_channel, text=data) # отправляем через бота в канал
+                    time.sleep(1)
 
                 else:
-                    print('строка уже существует')
+                    print('строка уже существует', '--', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 
             data = ssilka.get_attribute('href')
@@ -77,5 +78,5 @@ while True:
     except Exception as ex:
         print(ex)
 
-    time.sleep(30 * 60) # обновление данных каждые 30 минут
+    time.sleep(delay * 60) # обновление данных каждые 30 минут
 
