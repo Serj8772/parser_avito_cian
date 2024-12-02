@@ -74,6 +74,7 @@ while True:
                     bot.send_message(id_channel, text=data) # отправляем через бота в канал
                     time.sleep(1)
 
+
                 else:
                     print('строка уже существует', '--', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
