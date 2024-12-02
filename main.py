@@ -14,7 +14,6 @@ from settings1 import token, id_channel, link_avito
 # настройка бота
 bot = telebot.TeleBot(token)
 
-
 # # вводим прокси
 # PROXY_HOST = '185.111.24.31'
 # PROXY_PORT = '8000'
