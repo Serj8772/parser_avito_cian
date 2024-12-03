@@ -29,6 +29,7 @@ opts.add_argument(user_agent)
 opts.add_argument("--disable-blink-features=AutomationControlled")
 
 opts.add_argument('--headless') # запуск в фоновом режиме
+# opts.add_argument('--no-sandbox') # убирает ошибку запуска в headless режиме на сервере
 
 driver = webdriver.Chrome(options=opts)
 

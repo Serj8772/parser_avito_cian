@@ -27,6 +27,7 @@ opts.add_argument('--headless') # запуск в фоновом режиме
 
 opts.add_argument('user-agent=One')
 opts.add_argument("--disable-blink-features=AutomationControlled")
+# opts.add_argument('--no-sandbox') # убирает ошибку запуска в headless режиме на сервере
 
 opts.add_argument("window-size=2560×1600")
 
