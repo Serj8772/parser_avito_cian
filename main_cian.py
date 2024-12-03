@@ -1,3 +1,5 @@
+import zipfile
+
 import fake_useragent
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -30,6 +32,7 @@ opts.add_argument("window-size=2560×1600")
 
 driver = webdriver.Chrome(options=opts)
 
+
 while True:
 
     # загружаем ссылки из csv
@@ -38,9 +41,9 @@ while True:
         reader = csv.reader(file)
         existing_rows = list(reader)
 
-
     try:
-        driver.implicitly_wait(10)          # ожидание появление элемента в секундах
+        driver.implicitly_wait(5)          # ожидание появление элемента в секундах
+
         # проверить анонимность:
         # driver.get("https://intoli.com/blog/not-possible-to-block-chrome-headless/chrome-headless-test.html")
         # driver.get("https://2ip.ru/")
@@ -49,7 +52,11 @@ while True:
         #  ссылка на страницу поиска
         driver.get(link_cian) # заходим на сайт
         time.sleep(5)
-        # driver.save_screenshot('screenshot.png') # делаем скриншот
+        driver.save_screenshot(f'screenshots/screenshot_cian'+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'.png')
+        bot.send_message(id_channel, text=f'⚡️⚡️⚡️ СТАРТ ЦИАН ⚡️⚡️⚡️\n{time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}')
+
+        #https://www.avito.ru/lobnya/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?context=H4sIAAAAAAAA_wEjANz_YToxOntzOjg6ImZyb21QYWdlIjtzOjc6ImNhdGFsb2ciO312FITcIwAAAA
+        #https://www.avito.ru/lobnya/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?context=H4sIAAAAAAAA_wEjANz_YToxOntzOjg6ImZyb21QYWdlIjtzOjc6ImNhdGFsb2ciO312FITcIwAAAA&f=ASgBAgICA0SSA8gQ8AeQUrCzFP6hjwM&s=104
 
         # ищем объявления
         ssilki = driver.find_elements(By.CLASS_NAME, value='_93444fe79c--link--VtWj6')
@@ -65,7 +72,7 @@ while True:
                         writer.writerow([data])
                     print(data, '--', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                     bot.send_message(id_channel, text=data) # отправляем через бота в канал
-                    time.sleep(1)
+                    time.sleep(5)
 
                 else:
                     print('строка уже существует', '--', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
@@ -77,6 +84,7 @@ while True:
 
     except Exception as ex:
         print(ex)
+        bot.send_message(id_channel, text=f'⚡️⚡️⚡️ Ошибка ⚡️⚡️⚡️\n{ex}')
 
-    time.sleep(delay * 60) # обновление данных каждые 30 минут
+    time.sleep(delay * 60)
 
