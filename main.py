@@ -42,7 +42,7 @@ while True:
         existing_rows = list(reader)
 
     try:
-        driver.implicitly_wait(10)          # ожидание появление элемента в секундах
+        driver.implicitly_wait(5)          # ожидание появление элемента в секундах
 
         # проверить анонимность:
         # driver.get("https://intoli.com/blog/not-possible-to-block-chrome-headless/chrome-headless-test.html")
@@ -52,6 +52,8 @@ while True:
         #  ссылка на страницу поиска
         driver.get(link_avito) # заходим на сайт
         time.sleep(5)
+        driver.save_screenshot(f'screenshots/screenshot'+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+'.png')
+        bot.send_message(id_channel, text=f'⚡️⚡️⚡️ СТАРТ ⚡️⚡️⚡️\n{time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}')
 
         #https://www.avito.ru/lobnya/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?context=H4sIAAAAAAAA_wEjANz_YToxOntzOjg6ImZyb21QYWdlIjtzOjc6ImNhdGFsb2ciO312FITcIwAAAA
         #https://www.avito.ru/lobnya/kvartiry/sdam/na_dlitelnyy_srok-ASgBAgICAkSSA8gQ8AeQUg?context=H4sIAAAAAAAA_wEjANz_YToxOntzOjg6ImZyb21QYWdlIjtzOjc6ImNhdGFsb2ciO312FITcIwAAAA&f=ASgBAgICA0SSA8gQ8AeQUrCzFP6hjwM&s=104
@@ -69,11 +71,10 @@ while True:
                 if [data] not in existing_rows:
                     with open(filename, mode='a', newline='', encoding='utf-8') as file:
                         writer = csv.writer(file)
-                        writer.writerow(data)
+                        writer.writerow([data])
                     print(data, '--', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                     bot.send_message(id_channel, text=data) # отправляем через бота в канал
-                    time.sleep(1)
-
+                    time.sleep(5)
 
                 else:
                     print('строка уже существует', '--', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
@@ -85,5 +86,6 @@ while True:
 
     except Exception as ex:
         print(ex)
+        bot.send_message(id_channel, text=f'⚡️⚡️⚡️ Ошибка ⚡️⚡️⚡️\n{ex}')
 
     time.sleep(delay * 60)
